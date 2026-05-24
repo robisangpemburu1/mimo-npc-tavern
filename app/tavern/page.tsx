@@ -19,11 +19,13 @@ export default function TavernPage() {
   const handleSendMessage = async () => {
     if (!input.trim() || !npc) return;
 
+    const playerInput = input; // Save input before clearing
+
     // Add player message
     const playerMessage = {
       id: `msg-${Date.now()}`,
       npcId: npc.id,
-      content: input,
+      content: playerInput,
       timestamp: Date.now(),
       isPlayer: true,
     };
@@ -39,7 +41,7 @@ export default function TavernPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           npcId: npc.id,
-          playerInput: input,
+          playerInput: playerInput,
           context: `NPC: ${npc.name}, Role: ${npc.role}, Personality: ${npc.personality}`,
         }),
       });
@@ -66,6 +68,52 @@ export default function TavernPage() {
         id: `msg-${Date.now()}-error`,
         npcId: npc.id,
         content: 'The tavern grows quiet... (Connection error)',
+        timestamp: Date.now(),
+        isPlayer: false,
+      };
+      addMessage(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRequestQuest = async () => {
+    if (!npc || loading) return;
+
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/quest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          npcId: npc.id,
+          playerLevel: 1,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate quest');
+      }
+
+      const data = await response.json();
+
+      // Add quest as NPC message
+      const questMessage = {
+        id: `msg-${Date.now()}-quest`,
+        npcId: npc.id,
+        content: `📜 New Quest Available!\n\n${data.quest}`,
+        timestamp: Date.now(),
+        isPlayer: false,
+      };
+
+      addMessage(questMessage);
+    } catch (error) {
+      console.error('Quest error:', error);
+      const errorMessage = {
+        id: `msg-${Date.now()}-error`,
+        npcId: npc.id,
+        content: 'I have no quests for you at the moment... (Connection error)',
         timestamp: Date.now(),
         isPlayer: false,
       };
@@ -105,7 +153,10 @@ export default function TavernPage() {
         {/* Quests Section */}
         <div className="mt-8 pt-8 border-t border-tavern-gold/20">
           <h3 className="text-lg font-bold text-tavern-gold mb-4">Quests</h3>
-          <button className="w-full bg-tavern-gold/20 hover:bg-tavern-gold/30 border border-tavern-gold text-tavern-gold font-bold py-2 px-4 rounded transition-all">
+          <button 
+            onClick={handleRequestQuest}
+            className="w-full bg-tavern-gold/20 hover:bg-tavern-gold/30 border border-tavern-gold text-tavern-gold font-bold py-2 px-4 rounded transition-all"
+          >
             Request Quest
           </button>
         </div>
