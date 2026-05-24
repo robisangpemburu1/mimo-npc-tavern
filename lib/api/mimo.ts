@@ -1,7 +1,7 @@
 import { MiMoRequest, MiMoResponse } from '../types';
 
-const MIMO_API_URL = process.env.MIMO_API_URL || 'https://token-plan-sgp.xiaomimimo.com/v1';
-const MIMO_API_KEY = process.env.MIMO_API_KEY;
+const MIMO_API_URL = process.env.MIMO_API_URL || process.env.NIMO_API_URL || 'https://token-plan-sgp.xiaomimomo.com/v1';
+const MIMO_API_KEY = process.env.MIMO_API_KEY || process.env.NIMO_API_KEY;
 
 export async function callMiMoAPI(request: MiMoRequest): Promise<MiMoResponse> {
   if (!MIMO_API_KEY) {
