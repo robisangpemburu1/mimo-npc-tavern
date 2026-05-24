@@ -55,6 +55,10 @@ Open [http://localhost:3000](http://localhost:3000) to see the tavern.
 
 ## 🔑 Environment Variables
 
+### Local Development
+
+Create `.env.local` in the project root:
+
 ```env
 # MiMo AI API (V2.5 Pro)
 MIMO_API_KEY=your_mimo_api_key_here
@@ -63,6 +67,36 @@ MIMO_API_URL=https://api.mimo.ai/v2.5
 # Optional: Groq API fallback
 GROQ_API_KEY=your_groq_api_key_here
 ```
+
+**Note:** `.env.local` is ignored by git and only used locally.
+
+### Production Deployment (Netlify)
+
+1. **Push repository to GitHub** (without `.env.local`)
+2. **Connect to Netlify:**
+   - Go to [netlify.com](https://netlify.com)
+   - Click "Add new site" → "Import an existing project"
+   - Select your GitHub repository
+   - Click "Deploy site"
+
+3. **Add Environment Variables in Netlify:**
+   - Go to Site settings → Environment variables
+   - Click "Add a variable"
+   - Add the following variables:
+     - **Key:** `MIMO_API_KEY` | **Value:** Your MiMo API key
+     - **Key:** `MIMO_API_URL` | **Value:** `https://api.mimo.ai/v2.5`
+   - (Optional) Add `GROQ_API_KEY` for fallback
+
+4. **Trigger Redeploy:**
+   - After adding environment variables, Netlify will automatically redeploy
+   - Or manually trigger: Site settings → Deploys → "Trigger deploy"
+
+5. **Verify Deployment:**
+   - Visit your Netlify URL
+   - Test NPC dialogue to confirm API integration works
+   - Check browser console (F12) for any errors
+
+**Important:** Never commit `.env.local` or API keys to GitHub. Use Netlify dashboard for production secrets.
 
 ## 🎮 Usage
 
@@ -229,6 +263,28 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - **MiMo AI** — Powering the AI dialogue and quest generation
 - **Next.js Team** — Amazing React framework
 - **Tailwind CSS** — Beautiful utility-first CSS
+
+## 📸 Screenshots
+
+### 1. Homepage Hero
+![Homepage Hero](public/screenshots/1-homepage.png)
+*Welcome screen with feature overview and tavern theme*
+
+### 2. NPC Cards
+![NPC Cards](public/screenshots/2-npc-cards.png)
+*Three unique NPCs with distinct personalities and backstories*
+
+### 3. Chat Interface
+![Chat Interface](public/screenshots/3-chat-interface.png)
+*Interactive dialogue system with AI-powered responses*
+
+### 4. Quest Generation
+![Quest Generation](public/screenshots/4-quest-generation.png)
+*Dynamically generated quests with difficulty ratings and moral implications*
+
+### 5. Moral Evaluation
+![Moral Evaluation](public/screenshots/5-moral-evaluation.png)
+*AI analysis of player choices with alignment tracking and consequences*
 
 ## 📧 Contact
 

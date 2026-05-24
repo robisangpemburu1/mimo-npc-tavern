@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiMo NPC Tavern - Screenshots</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #1a0f0a, #3d2817);
+      color: #fff;
+      padding: 40px;
+    }
+
+    .screenshot-card {
+      background: #3d2817;
+      border: 2px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 40px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .screenshot-card h2 {
+      color: #d4af37;
+      font-size: 32px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    /* Screenshot 1: Homepage */
+    .hero-section {
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .hero-section h1 {
+      font-size: 48px;
+      color: #d4af37;
+      margin-bottom: 16px;
+    }
+
+    .hero-section p {
+      font-size: 20px;
+      color: #ccc;
+      max-width: 800px;
+      margin: 0 auto 32px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .feature-card {
+      background: rgba(61, 40, 23, 0.5);
+      border: 2px solid rgba(212, 175, 55, 0.3);
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .feature-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      color: #d4af37;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      color: #aaa;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Screenshot 2: NPC Cards */
+    .npc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .npc-card {
+      background: rgba(61, 40, 23, 0.7);
+      border: 2px solid rgba(212, 175, 55, 0.4);
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .npc-card:hover {
+      border-color: #d4af37;
+      transform: translateY(-4px);
+    }
+
+    .npc-avatar {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    .npc-name {
+      color: #d4af37;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .npc-role {
+      color: rgba(212, 175, 55, 0.7);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .speech-bubble {
+      background: rgba(61, 40, 23, 0.9);
+      border: 2px solid rgba(212, 175, 55, 0.3);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .speech-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 24px;
+      width: 16px;
+      height: 16px;
+      background: rgba(61, 40, 23, 0.9);
+      border-right: 2px solid rgba(212, 175, 55, 0.3);
+      border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+      transform: rotate(45deg);
+    }
+
+    .speech-bubble p {
+      color: #ddd;
+      font-style: italic;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .npc-backstory {
+      color: #999;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .npc-button {
+      background: rgba(212, 175, 55, 0.2);
+      border: 1px solid #d4af37;
+      color: #d4af37;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s;
+    }
+
+    .npc-button:hover {
+      background: rgba(212, 175, 55, 0.3);
+    }
+
+    /* Screenshot 3: Chat Interface */
+    .chat-container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 24px;
+      height: 600px;
+    }
+
+    .npc-sidebar {
+      background: rgba(26, 15, 10, 0.5);
+      border: 2px solid rgba(212, 175, 55, 0.2);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .sidebar-title {
+      color: #d4af37;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    .npc-list-item {
+      background: rgba(61, 40, 23, 0.5);
+      border: 2px solid rgba(212, 175, 55, 0.2);
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .npc-list-item.active {
+      border-color: #d4af37;
+      background: rgba(212, 175, 55, 0.2);
+    }
+
+    .npc-list-avatar {
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .npc-list-name {
+      color: #d4af37;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .npc-list-role {
+      color: #999;
+      font-size: 11px;
+    }
+
+    .chat-area {
+      background: rgba(61, 40, 23, 0.3);
+      border: 2px solid rgba(212, 175, 55, 0.2);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: rgba(61, 40, 23, 0.7);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-header-avatar {
+      font-size: 40px;
+    }
+
+    .chat-header-info h3 {
+      color: #d4af37;
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .chat-header-info p {
+      color: #999;
+      font-size: 13px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .message {
+      display: flex;
+      max-width: 70%;
+    }
+
+    .message.player {
+      align-self: flex-end;
+      justify-content: flex-end;
+    }
+
+    .message.npc {
+      align-self: flex-start;
+    }
+
+    .message-bubble {
+      padding: 12px 16px;
+      border-radius: 8px;
+      line-height: 1.5;
+    }
+
+    .message.player .message-bubble {
+      background: rgba(212, 175, 55, 0.2);
+      border: 1px solid #d4af37;
+      color: #d4af37;
+    }
+
+    .message.npc .message-bubble {
+      background: rgba(61, 40, 23, 0.9);
+      border: 2px solid rgba(212, 175, 55, 0.3);
+      color: #ddd;
+    }
+
+    .chat-input-area {
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      background: rgba(61, 40, 23, 0.5);
+      padding: 16px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: rgba(26, 15, 10, 0.5);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 6px;
+      padding: 12px 16px;
+      color: #ddd;
+      font-size: 14px;
+    }
+
+    .chat-send-btn {
+      background: #d4af37;
+      color: #1a0f0a;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Screenshot 4: Quest Generation */
+    .quest-card {
+      background: rgba(61, 40, 23, 0.7);
+      border: 2px solid rgba(212, 175, 55, 0.4);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .quest-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .quest-title {
+      color: #d4af37;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .quest-difficulty {
+      background: rgba(255, 107, 53, 0.2);
+      border: 1px solid #ff6b35;
+      color: #ff6b35;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .quest-description {
+      color: #ccc;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .quest-details {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .quest-detail-item {
+      background: rgba(26, 15, 10, 0.5);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 6px;
+      padding: 12px;
+    }
+
+    .quest-detail-label {
+      color: #999;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .quest-detail-value {
+      color: #d4af37;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .quest-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .quest-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+
+    .quest-btn.accept {
+      background: #d4af37;
+      color: #1a0f0a;
+    }
+
+    .quest-btn.decline {
+      background: rgba(212, 175, 55, 0.2);
+      border: 1px solid #d4af37;
+      color: #d4af37;
+    }
+
+    /* Screenshot 5: Moral Evaluation */
+    .moral-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .moral-score-card {
+      background: rgba(61, 40, 23, 0.7);
+      border: 2px solid rgba(212, 175, 55, 0.4);
+      border-radius: 8px;
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .moral-score-title {
+      color: #d4af37;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .moral-score-bar {
+      background: rgba(26, 15, 10, 0.5);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 8px;
+      height: 40px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .moral-score-fill {
+      background: linear-gradient(to right, #4ade80, #d4af37);
+      height: 100%;
+      width: 65%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 12px;
+      color: #1a0f0a;
+      font-weight: bold;
+    }
+
+    .moral-alignment {
+      color: #4ade80;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .moral-description {
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .choice-analysis {
+      background: rgba(61, 40, 23, 0.7);
+      border: 2px solid rgba(212, 175, 55, 0.4);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .choice-analysis h3 {
+      color: #d4af37;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .choice-text {
+      background: rgba(26, 15, 10, 0.5);
+      border-left: 4px solid #d4af37;
+      padding: 16px;
+      margin-bottom: 16px;
+      color: #ddd;
+      font-style: italic;
+    }
+
+    .analysis-section {
+      margin-bottom: 16px;
+    }
+
+    .analysis-label {
+      color: #999;
+      font-size: 12px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .analysis-content {
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .consequences-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .consequences-list li {
+      background: rgba(26, 15, 10, 0.5);
+      border-left: 3px solid #ff6b35;
+      padding: 12px;
+      margin-bottom: 8px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screenshot 1: Homepage Hero -->
+  <div class="screenshot-card" id="screenshot-1">
+    <div class="hero-section">
+      <h1>🏰 Welcome to the Tavern</h1>
+      <p>Step into a world where AI-powered NPCs come alive. Chat with unique characters, embark on quests, and make choices that shape your moral journey.</p>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚔️</div>
+          <h3>Interactive NPCs</h3>
+          <p>Chat with 3 unique characters, each with distinct personalities powered by MiMo AI</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📜</div>
+          <h3>Quest Generation</h3>
+          <p>Receive dynamically generated quests tailored to your level and choices</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚖️</div>
+          <h3>Moral Evaluation</h3>
+          <p>Your choices matter. AI analyzes your decisions and tracks your moral alignment</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screenshot 2: NPC Cards -->
+  <div class="screenshot-card" id="screenshot-2">
+    <h2>Meet the Tavern Folk</h2>
+    <div class="npc-grid">
+      <div class="npc-card">
+        <div class="npc-avatar">⚔️</div>
+        <div class="npc-name">Kael Ironforge</div>
+        <div class="npc-role">Grizzled Veteran</div>
+        <div class="speech-bubble">
+          <p>"Well, well... another adventurer walks through that door. Sit down, I'll buy you a drink."</p>
+        </div>
+        <div class="npc-backstory">Former knight commander, now runs the tavern. Seen too much war, seeks redemption.</div>
+        <button class="npc-button">Talk to Kael</button>
+      </div>
+
+      <div class="npc-card">
+        <div class="npc-avatar">🎭</div>
+        <div class="npc-name">Lyra Shadowveil</div>
+        <div class="npc-role">Mysterious Merchant</div>
+        <div class="speech-bubble">
+          <p>"Ah, a new face. I have something you might be interested in... if the price is right."</p>
+        </div>
+        <div class="npc-backstory">Trader of rare artifacts and forbidden knowledge. Her true allegiances remain unknown.</div>
+        <button class="npc-button">Talk to Lyra</button>
+      </div>
+
+      <div class="npc-card">
+        <div class="npc-avatar">🎵</div>
+        <div class="npc-name">Finn Songweaver</div>
+        <div class="npc-role">Young Bard</div>
+        <div class="speech-bubble">
+          <p>"Hey there, friend! I'm Finn. Want to hear a song? Or maybe you have a story to share?"</p>
+        </div>
+        <div class="npc-backstory">Traveling musician searching for the greatest adventure to inspire his next ballad.</div>
+        <button class="npc-button">Talk to Finn</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screenshot 3: Chat Interface -->
+  <div class="screenshot-card" id="screenshot-3">
+    <h2>Interactive Dialogue System</h2>
+    <div class="chat-container">
+      <div class="npc-sidebar">
+        <div class="sidebar-title">Tavern Folk</div>
+        <div class="npc-list-item active">
+          <div class="npc-list-avatar">⚔️</div>
+          <div class="npc-list-name">Kael Ironforge</div>
+          <div class="npc-list-role">Grizzled Veteran</div>
+        </div>
+        <div class="npc-list-item">
+          <div class="npc-list-avatar">🎭</div>
+          <div class="npc-list-name">Lyra Shadowveil</div>
+          <div class="npc-list-role">Mysterious Merchant</div>
+        </div>
+        <div class="npc-list-item">
+          <div class="npc-list-avatar">🎵</div>
+          <div class="npc-list-name">Finn Songweaver</div>
+          <div class="npc-list-role">Young Bard</div>
+        </div>
+      </div>
+
+      <div class="chat-area">
+        <div class="chat-header">
+          <div class="chat-header-avatar">⚔️</div>
+          <div class="chat-header-info">
+            <h3>Kael Ironforge</h3>
+            <p>Grizzled Veteran</p>
+          </div>
+        </div>
+
+        <div class="chat-messages">
+          <div class="message npc">
+            <div class="message-bubble">Well, well... another adventurer walks through that door. Sit down, I'll buy you a drink.</div>
+          </div>
+          <div class="message player">
+            <div class="message-bubble">Tell me about your past, Kael.</div>
+          </div>
+          <div class="message npc">
+            <div class="message-bubble">Ah, my past... I've seen too many battles, lost too many friends. I was once a knight commander, leading brave souls into war. But war changes you. Now I run this tavern, trying to find peace in serving ale instead of serving death.</div>
+          </div>
+          <div class="message player">
+            <div class="message-bubble">Do you have any quests for me?</div>
+          </div>
+          <div class="message npc">
+            <div class="message-bubble">As a matter of fact, I do. The old ruins to the north are haunted by restless spirits. They were my comrades once. If you can put them to rest, I'll reward you handsomely. But be warned—it's not an easy task.</div>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <input type="text" class="chat-input" placeholder="What do you say?" value="">
+          <button class="chat-send-btn">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screenshot 4: Quest Generation -->
+  <div class="screenshot-card" id="screenshot-4">
+    <h2>Dynamic Quest Generation</h2>
+    <div class="quest-card">
+      <div class="quest-header">
+        <div class="quest-title">Spirits of the Northern Ruins</div>
+        <div class="quest-difficulty">HARD</div>
+      </div>
+      <div class="quest-description">
+        The old ruins to the north are haunted by restless spirits—former knights who fell in battle. Kael Ironforge, their former commander, asks you to put them to rest. You must venture into the ruins, face the spirits, and perform a ritual to grant them peace. But beware: the spirits are powerful, and they may not go quietly.
+      </div>
+      <div class="quest-details">
+        <div class="quest-detail-item">
+          <div class="quest-detail-label">Reward</div>
+          <div class="quest-detail-value">500 Gold + Legendary Sword</div>
+        </div>
+        <div class="quest-detail-item">
+          <div class="quest-detail-label">Moral Alignment</div>
+          <div class="quest-detail-value">Good</div>
+        </div>
+        <div class="quest-detail-item">
+          <div class="quest-detail-label">Difficulty</div>
+          <div class="quest-detail-value">Hard</div>
+        </div>
+        <div class="quest-detail-item">
+          <div class="quest-detail-label">Quest Giver</div>
+          <div class="quest-detail-value">Kael Ironforge</div>
+        </div>
+      </div>
+      <div class="quest-actions">
+        <button class="quest-btn accept">Accept Quest</button>
+        <button class="quest-btn decline">Decline</button>
+      </div>
+    </div>
+
+    <div class="quest-card">
+      <div class="quest-header">
+        <div class="quest-title">The Merchant's Secret</div>
+        <div class="quest-difficulty" style="border-color: #d4af37; color: #d4af37; background: rgba(212, 175, 55, 0.2);">MEDIUM</div>
+      </div>
+      <div class="quest-description">
+        Lyra Shadowveil has a proposition for you. She needs someone to retrieve a mysterious artifact from a rival merchant's vault. The job is risky, and the moral implications are unclear. Will you help her, or will you refuse and risk losing her trust?
+      </div>
+      <div class="quest-details">
+        <div class="quest-detail-item">
+          <div class="quest-detail-label">Reward</div>
+          <div class="quest-detail-value">300 Gold + Rare Artifact</div>
+        </div>
+        <div class="quest-detail-item">
+          <div class="quest-detail-label">Moral Alignment</div>
+          <div class="quest-detail-value">Neutral</div>
+        </div>
+        <div class="quest-detail-item">
+          <div class="quest-detail-label">Difficulty</div>
+          <div class="quest-detail-value">Medium</div>
+        </div>
+        <div class="quest-detail-item">
+          <div class="quest-detail-label">Quest Giver</div>
+          <div class="quest-detail-value">Lyra Shadowveil</div>
+        </div>
+      </div>
+      <div class="quest-actions">
+        <button class="quest-btn accept">Accept Quest</button>
+        <button class="quest-btn decline">Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screenshot 5: Moral Evaluation -->
+  <div class="screenshot-card" id="screenshot-5">
+    <h2>Moral Evaluation System</h2>
+    <div class="moral-container">
+      <div class="moral-score-card">
+        <div class="moral-score-title">Your Moral Alignment</div>
+        <div class="moral-score-bar">
+          <div class="moral-score-fill">+65</div>
+        </div>
+        <div class="moral-alignment">Good</div>
+        <div class="moral-description">Your choices reflect honor, compassion, and a desire to help others. The people of the realm see you as a hero.</div>
+      </div>
+
+      <div class="choice-analysis">
+        <h3>Recent Choice Analysis</h3>
+        <div class="choice-text">
+          "I decided to help the villagers defend against the bandits, even though it meant risking my own life."
+        </div>
+        
+        <div class="analysis-section">
+          <div class="analysis-label">Alignment Impact</div>
+          <div class="analysis-content">
+            <strong style="color: #4ade80;">Good (+15)</strong> — Your choice shows courage and selflessness. You put the needs of others before your own safety.
+          </div>
+        </div>
+
+        <div class="analysis-section">
+          <div class="analysis-label">Reasoning</div>
+          <div class="analysis-content">
+            By defending the villagers, you demonstrated the qualities of a true hero: bravery, compassion, and a willingness to sacrifice for the greater good. This action will be remembered by the people, and your reputation as a protector will grow.
+          </div>
+        </div>
+
+        <div class="analysis-section">
+          <div class="analysis-label">Potential Consequences</div>
+          <ul class="consequences-list">
+            <li>The villagers will trust you and may offer future quests or rewards</li>
+            <li>Your reputation as a hero will spread, opening new opportunities</li>
+            <li>The bandits may seek revenge, creating future challenges</li>
+            <li>Other NPCs with good alignment will view you more favorably</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
