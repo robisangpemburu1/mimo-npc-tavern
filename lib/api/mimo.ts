@@ -2,39 +2,85 @@ import { MiMoRequest, MiMoResponse } from '../types';
 
 const MIMO_API_URL = process.env.MIMO_API_URL || process.env.NIMO_API_URL || 'https://token-plan-sgp.xiaomimomo.com/v1';
 const MIMO_API_KEY = process.env.MIMO_API_KEY || process.env.NIMO_API_KEY;
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
 export async function callMiMoAPI(request: MiMoRequest): Promise<MiMoResponse> {
-  if (!MIMO_API_KEY) {
-    console.log('MiMo API key not configured - using mock data');
-    return getMockResponse(request);
-  }
+  // Try MiMo first
+  if (MIMO_API_KEY) {
+    try {
+      console.log('Calling MiMo API...');
+      const response = await fetch(`${MIMO_API_URL}/generate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${MIMO_API_KEY}`,
+        },
+        body: JSON.stringify({
+          ...request,
+          model: 'mimo-v2.5-pro',
+        }),
+      });
 
-  try {
-    const response = await fetch(`${MIMO_API_URL}/generate`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${MIMO_API_KEY}`,
-      },
-      body: JSON.stringify({
-        ...request,
-        model: 'mimo-v2.5-pro',
-      }),
-    });
+      if (!response.ok) {
+        console.warn(`MiMo API error: ${response.status} ${response.statusText}`);
+        throw new Error(`MiMo API error: ${response.statusText}`);
+      }
 
-    if (!response.ok) {
-      throw new Error(`MiMo API error: ${response.statusText}`);
+      const data = await response.json();
+      console.log('MiMo API success');
+      return {
+        content: data.choices?.[0]?.message?.content || data.content || '',
+        usage: data.usage,
+      };
+    } catch (error) {
+      console.error('MiMo API failed:', error);
+      // Fall through to Groq
     }
-
-    const data = await response.json();
-    return {
-      content: data.choices?.[0]?.message?.content || data.content || '',
-      usage: data.usage,
-    };
-  } catch (error) {
-    console.error('MiMo API call failed:', error);
-    return getMockResponse(request);
   }
+
+  // Try Groq fallback
+  if (GROQ_API_KEY) {
+    try {
+      console.log('Calling Groq API (fallback)...');
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROQ_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [
+            {
+              role: 'user',
+              content: request.prompt,
+            },
+          ],
+          temperature: request.temperature || 0.7,
+          max_tokens: request.maxTokens || 150,
+        }),
+      });
+
+      if (!response.ok) {
+        console.warn(`Groq API error: ${response.status}`);
+        throw new Error(`Groq API error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Groq API success');
+      return {
+        content: data.choices?.[0]?.message?.content || '',
+        usage: data.usage,
+      };
+    } catch (error) {
+      console.error('Groq API failed:', error);
+      // Fall through to mock
+    }
+  }
+
+  // Fallback to mock
+  console.log('Using mock response (no API keys configured)');
+  return getMockResponse(request);
 }
 
 // Mock responses for development
