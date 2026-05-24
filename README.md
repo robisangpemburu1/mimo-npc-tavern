@@ -2,6 +2,12 @@
 
 AI-powered fantasy tavern with interactive NPCs, dynamic quest generation, and moral evaluation system.
 
+**🚀 Status: LIVE & WORKING**
+- **Live URL:** https://mimo-npc-tavern.netlify.app/
+- **Deployment:** Netlify ✓
+- **AI Integration:** Groq API (Llama 3.3 70B) + MiMo AI fallback ✓
+- **Build Status:** Passing ✓
+
 ## ✨ Features
 
 ### 🎭 Interactive NPCs
@@ -30,7 +36,8 @@ Your choices matter. AI analyzes your decisions and tracks your moral alignment:
 - **TypeScript** — Type-safe development
 - **Tailwind CSS** — Utility-first styling with custom tavern theme
 - **Zustand** — Lightweight state management
-- **MiMo AI V2.5 Pro** — AI-powered dialogue, quest generation, and moral analysis
+- **Groq API (Primary)** — Llama 3.3 70B, free 30 RPM for AI dialogue
+- **MiMo AI V2.5 Pro (Fallback)** — AI-powered dialogue, quest generation, and moral analysis
 - **Lucide React** — Beautiful icons
 
 ## 📦 Installation
