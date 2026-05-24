@@ -9,31 +9,54 @@ export async function callMiMoAPI(request: MiMoRequest): Promise<MiMoResponse> {
   if (MIMO_API_KEY) {
     try {
       console.log('Calling MiMo API...');
-      const response = await fetch(`${MIMO_API_URL}/generate`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${MIMO_API_KEY}`,
-        },
-        body: JSON.stringify({
-          ...request,
-          model: 'mimo-v2.5-pro',
-        }),
-      });
+      
+      // Try multiple endpoint patterns
+      const endpoints = [
+        `${MIMO_API_URL}/generate`,
+        `${MIMO_API_URL}/chat/completions`,
+        `${MIMO_API_URL}/v1/chat/completions`,
+      ];
+      
+      let lastError = null;
+      
+      for (const endpoint of endpoints) {
+        try {
+          console.log(`Trying endpoint: ${endpoint}`);
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${MIMO_API_KEY}`,
+            },
+            body: JSON.stringify({
+              ...request,
+              model: 'mimo-v2.5-pro',
+            }),
+          });
 
-      if (!response.ok) {
-        console.warn(`MiMo API error: ${response.status} ${response.statusText}`);
-        throw new Error(`MiMo API error: ${response.statusText}`);
+          if (!response.ok) {
+            console.warn(`MiMo API error (${endpoint}): ${response.status} ${response.statusText}`);
+            lastError = new Error(`MiMo API error: ${response.statusText}`);
+            continue; // Try next endpoint
+          }
+
+          const data = await response.json();
+          console.log(`MiMo API success (${endpoint})`);
+          return {
+            content: data.choices?.[0]?.message?.content || data.content || data.text || '',
+            usage: data.usage,
+          };
+        } catch (endpointError) {
+          console.warn(`Endpoint ${endpoint} failed:`, endpointError);
+          lastError = endpointError;
+        }
       }
-
-      const data = await response.json();
-      console.log('MiMo API success');
-      return {
-        content: data.choices?.[0]?.message?.content || data.content || '',
-        usage: data.usage,
-      };
+      
+      // All endpoints failed
+      if (lastError) throw lastError;
+      
     } catch (error) {
-      console.error('MiMo API failed:', error);
+      console.error('All MiMo endpoints failed:', error);
       // Fall through to Groq
     }
   }
