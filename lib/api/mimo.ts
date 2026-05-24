@@ -5,10 +5,50 @@ const MIMO_API_KEY = process.env.MIMO_API_KEY || process.env.NIMO_API_KEY;
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
 export async function callMiMoAPI(request: MiMoRequest): Promise<MiMoResponse> {
-  // Try MiMo first
+  // Try Groq first (primary)
+  if (GROQ_API_KEY) {
+    try {
+      console.log('Calling Groq API (primary)...');
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROQ_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [
+            {
+              role: 'user',
+              content: request.prompt,
+            },
+          ],
+          temperature: request.temperature || 0.7,
+          max_tokens: request.maxTokens || 150,
+        }),
+      });
+
+      if (!response.ok) {
+        console.warn(`Groq API error: ${response.status}`);
+        throw new Error(`Groq API error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Groq API success');
+      return {
+        content: data.choices?.[0]?.message?.content || '',
+        usage: data.usage,
+      };
+    } catch (error) {
+      console.error('Groq API failed:', error);
+      // Fall through to MiMo
+    }
+  }
+
+  // Try MiMo fallback
   if (MIMO_API_KEY) {
     try {
-      console.log('Calling MiMo API...');
+      console.log('Calling MiMo API (fallback)...');
       
       // Try multiple endpoint patterns
       const endpoints = [
@@ -57,46 +97,6 @@ export async function callMiMoAPI(request: MiMoRequest): Promise<MiMoResponse> {
       
     } catch (error) {
       console.error('All MiMo endpoints failed:', error);
-      // Fall through to Groq
-    }
-  }
-
-  // Try Groq fallback
-  if (GROQ_API_KEY) {
-    try {
-      console.log('Calling Groq API (fallback)...');
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${GROQ_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages: [
-            {
-              role: 'user',
-              content: request.prompt,
-            },
-          ],
-          temperature: request.temperature || 0.7,
-          max_tokens: request.maxTokens || 150,
-        }),
-      });
-
-      if (!response.ok) {
-        console.warn(`Groq API error: ${response.status}`);
-        throw new Error(`Groq API error: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      console.log('Groq API success');
-      return {
-        content: data.choices?.[0]?.message?.content || '',
-        usage: data.usage,
-      };
-    } catch (error) {
-      console.error('Groq API failed:', error);
       // Fall through to mock
     }
   }
