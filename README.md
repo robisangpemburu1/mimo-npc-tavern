@@ -62,7 +62,7 @@ Create `.env.local` in the project root:
 ```env
 # MiMo AI API (V2.5 Pro)
 MIMO_API_KEY=your_mimo_api_key_here
-MIMO_API_URL=https://api.mimo.ai/v2.5
+MIMO_API_URL=https://token-plan-sgp.xiaomimomo.com/v1
 
 # Optional: Groq API fallback
 GROQ_API_KEY=your_groq_api_key_here
@@ -84,7 +84,7 @@ GROQ_API_KEY=your_groq_api_key_here
    - Click "Add a variable"
    - Add the following variables:
      - **Key:** `MIMO_API_KEY` | **Value:** Your MiMo API key
-     - **Key:** `MIMO_API_URL` | **Value:** `https://api.mimo.ai/v2.5`
+     - **Key:** `MIMO_API_URL` | **Value:** `https://token-plan-sgp.xiaomimomo.com/v1`
    - (Optional) Add `GROQ_API_KEY` for fallback
 
 4. **Trigger Redeploy:**

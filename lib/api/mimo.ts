@@ -1,6 +1,6 @@
 import { MiMoRequest, MiMoResponse } from '../types';
 
-const MIMO_API_URL = process.env.MIMO_API_URL || 'https://api.mimo.ai/v2.5';
+const MIMO_API_URL = process.env.MIMO_API_URL || 'https://token-plan-sgp.xiaomimimo.com/v1';
 const MIMO_API_KEY = process.env.MIMO_API_KEY;
 
 export async function callMiMoAPI(request: MiMoRequest): Promise<MiMoResponse> {
